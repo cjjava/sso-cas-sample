@@ -1,0 +1,15 @@
+/.settings
+/.project
+/sso-cas-server/.settings
+/sso-cas-server/logs
+/sso-cas-server/target
+/sso-cas-server/.classpath
+/sso-cas-server/.project
+/sso-cas-client-b/.settings
+/sso-cas-client-b/target
+/sso-cas-client-b/.classpath
+/sso-cas-client-b/.project
+/sso-cas-client-a/.settings
+/sso-cas-client-a/target
+/sso-cas-client-a/.classpath
+/sso-cas-client-a/.project
