@@ -30,8 +30,11 @@
 </footer>
 
 </div> <!-- END #container -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headjs/1.0.3/head.min.js"></script>
 <spring:theme code="cas.javascript.file" var="casJavascriptFile" text="" />
+<spring:theme code="jquery.javascript.file" var="jqueryJavascriptFile" text="" />
+<spring:theme code="head.javascript.file" var="headJavascriptFile" text="" />
+<script type="text/javascript" src="<c:url value="${jqueryJavascriptFile}" />"></script>
+<script type="text/javascript" src="<c:url value="${headJavascriptFile}" />"></script>
 <script type="text/javascript" src="<c:url value="${casJavascriptFile}" />"></script>
 </body>
 </html>
