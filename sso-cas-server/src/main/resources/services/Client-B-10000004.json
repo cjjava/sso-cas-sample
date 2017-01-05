@@ -1,10 +1,10 @@
 {
   "@class" : "org.jasig.cas.services.RegexRegisteredService",
-  "serviceId" : "^http://localhost:666/.*",
-  "name" : "ClientA",
+  "serviceId" : "^http://localhost:888/.*",
+  "name" : "ClientB",
   "theme" : "apereo",
-  "id" : 10000003,
-  "description" : "Client a sample service",
+  "id" : 10000004,
+  "description" : "Client b sample service",
   "proxyPolicy" : {
     "@class" : "org.jasig.cas.services.RefuseRegisteredServiceProxyPolicy"
   },

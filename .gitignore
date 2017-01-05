@@ -13,3 +13,7 @@
 /sso-cas-client-a/target
 /sso-cas-client-a/.classpath
 /sso-cas-client-a/.project
+/sso-cas-client-a/.apt_generated
+/sso-cas-client-a/.factorypath
+/sso-cas-client-a/.springBeans
+/sso-cas-client-b/.factorypath
