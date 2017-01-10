@@ -1,13 +1,15 @@
 {
   "@class" : "org.jasig.cas.services.RegexRegisteredService",
-  "serviceId" : "^(https|imaps)://.*",
-  "name" : "HTTPS and IMAPS",
-  "id" : 10000001,
-  "description" : "This service definition authorized all application urls that support HTTPS and IMAPS protocols.",
+  "serviceId" : "^https://d.milkoutlet.com:6443/.*",
+  "name" : "ClientD",
+  "theme" : "apereo",
+  "id" : 10000006,
+  "description" : "Client d sample service",
   "proxyPolicy" : {
-    "@class" : "org.jasig.cas.services.RefuseRegisteredServiceProxyPolicy"
+    "@class" : "org.jasig.cas.services.RegexMatchingRegisteredServiceProxyPolicy",
+    "pattern" : "^https://.+"
   },
-  "evaluationOrder" : 0,
+  "evaluationOrder" : 1,
   "usernameAttributeProvider" : {
     "@class" : "org.jasig.cas.services.DefaultRegisteredServiceUsernameProvider"
   },

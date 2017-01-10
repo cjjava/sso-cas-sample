@@ -1,4 +1,4 @@
-package com.cjoop.client.a.security;
+package com.cjoop.client.d.security;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -6,7 +6,6 @@ import java.util.Set;
 import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.cas.authentication.CasAssertionAuthenticationToken;
@@ -19,8 +18,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 
-import com.cjoop.client.a.service.AuthoritiesConstants;
-import com.cjoop.client.a.service.CustomUserDetailsService;
+import com.cjoop.client.d.service.AuthoritiesConstants;
+import com.cjoop.client.d.service.CustomUserDetailsService;
 
 /**
  * 安全框架配置信息
@@ -28,7 +27,6 @@ import com.cjoop.client.a.service.CustomUserDetailsService;
  *
  */
 @Configuration
-@AutoConfigureAfter(SpringSecurityCasAutoConfiguration.class)
 public class SpringSecurityAutoConfiguration extends WebSecurityConfigurerAdapter{
 	@Autowired
 	@Qualifier("casAuthenticationEntryPoint")
@@ -41,20 +39,18 @@ public class SpringSecurityAutoConfiguration extends WebSecurityConfigurerAdapte
 	LogoutFilter requestSingleLogoutFilter;
 	@Autowired
 	CasAuthenticationFilter casAuthenticationFilter;
-	
+			
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
+		http.csrf().disable();
 		http.exceptionHandling().authenticationEntryPoint(casAuthenticationEntryPoint);
 		http.addFilter(casAuthenticationFilter);
 		http.addFilterBefore(requestSingleLogoutFilter, LogoutFilter.class);
 		http.addFilterBefore(singleSignOutFilter, CasAuthenticationFilter.class);
-		
 		http.authorizeRequests()
 		.antMatchers("/","/index.html").permitAll()
 		.antMatchers("/**").authenticated().antMatchers("/admin.html")
 		.hasAuthority(AuthoritiesConstants.ADMIN).anyRequest().authenticated();
-		
 	}
 	
 	
@@ -68,7 +64,6 @@ public class SpringSecurityAutoConfiguration extends WebSecurityConfigurerAdapte
 			AuthenticationManagerBuilder authenticationManagerBuilder,CasAuthenticationProvider casAuthenticationProvider) {
 		authenticationManagerBuilder.authenticationProvider(casAuthenticationProvider);
 	}
-	
 	
 	/**
 	 * 配置用户详情服务，这个根据实际情况编写
@@ -88,7 +83,5 @@ public class SpringSecurityAutoConfiguration extends WebSecurityConfigurerAdapte
 		admins.add("admin");
 		return admins;
 	}
-	
-	
 	
 }

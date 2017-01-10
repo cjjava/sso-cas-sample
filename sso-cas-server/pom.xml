@@ -91,7 +91,7 @@
 				<configuration>
 					<path>/cas</path>
 					<httpsPort>8443</httpsPort>
-					<keystoreFile>${basedir}\milkoutlet.jks</keystoreFile>
+					<keystoreFile>${basedir}\sso.milkoutlet.jks</keystoreFile>
 					<keystorePass>changeit</keystorePass>
 					<uriEncoding>UTF-8</uriEncoding>
 				</configuration>

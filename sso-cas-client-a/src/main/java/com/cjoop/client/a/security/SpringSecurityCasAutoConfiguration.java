@@ -9,13 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.cas.ServiceProperties;
 import org.springframework.security.cas.authentication.CasAssertionAuthenticationToken;
 import org.springframework.security.cas.authentication.CasAuthenticationProvider;
 import org.springframework.security.cas.web.CasAuthenticationEntryPoint;
+import org.springframework.security.cas.web.CasAuthenticationFilter;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy;
 
 /**
  * 安全框架单点登录配置信息
@@ -27,7 +31,21 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 public class SpringSecurityCasAutoConfiguration{
 	@Autowired
 	private CasProperties casProperties;
+	@Autowired
+	AuthenticationManager authenticationManager;
 	
+	/**
+	 * 配置认证过滤器
+	 * @return CasAuthenticationFilter
+	 * @throws Exception
+	 */
+	@Bean
+	public CasAuthenticationFilter casAuthenticationFilter(SessionAuthenticationStrategy sessionStrategy) throws Exception {
+		CasAuthenticationFilter casAuthenticationFilter = new CasAuthenticationFilter();
+		casAuthenticationFilter.setAuthenticationManager(authenticationManager);
+		casAuthenticationFilter.setSessionAuthenticationStrategy(sessionStrategy);
+		return casAuthenticationFilter;
+	}
 	
 	@Bean
 	public LogoutFilter requestSingleLogoutFilter() {
@@ -100,5 +118,14 @@ public class SpringSecurityCasAutoConfiguration{
 		sp.setService(casProperties.getService());
 		sp.setSendRenew(casProperties.isSendRenew());
 		return sp;
+	}
+	
+	/**
+	 * 配置会话策略,根据实际情况调整
+	 * @return SessionAuthenticationStrategy
+	 */
+	@Bean
+	public SessionAuthenticationStrategy sessionStrategy() {
+		return new SessionFixationProtectionStrategy();
 	}
 }
